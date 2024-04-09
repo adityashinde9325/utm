@@ -1,0 +1,31 @@
+// Function to append form data to Google Sheet
+function appendFormData(name, number, email, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content, referring_url) {
+  var ss = SpreadsheetApp.openById('17finSBWpmyjaOXQODTEUECpPGzCsNsOluXJplWYjhVg'); // Replace with your Google Sheet ID
+  var sheet = ss.getSheetByName('Sheet1'); // Replace 'Sheet1' with your sheet name
+  
+  // Append form data to the sheet
+  sheet.appendRow([new Date(), name, number, email, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content, referring_url]);
+}
+
+// Function to handle form submission
+function onSubmitForm(e) {
+  var name = e.parameter.name;
+  var number = e.parameter.number;
+  var email = e.parameter.email;
+  var message = e.parameter.message;
+  var utm_source = e.parameter.utm_source;
+  var utm_medium = e.parameter.utm_medium;
+  var utm_campaign = e.parameter.utm_campaign;
+  var utm_term = e.parameter.utm_term;
+  var utm_content = e.parameter.utm_content;
+  var referring_url = e.parameter.referring_url;
+  
+  // Call function to append form data to Google Sheet
+  appendFormData(name, number, email, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content, referring_url);
+}
+
+// Trigger to run onSubmitForm when form is submitted
+function doPost(e) {
+  onSubmitForm(e);
+  return ContentService.createTextOutput('Form Submitted Successfully');
+}
